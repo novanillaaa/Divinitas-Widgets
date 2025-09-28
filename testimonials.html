@@ -6,58 +6,53 @@
 <style>
 .testimonial-container {
   background: #f9f9f9;
-  border-left: 4px solid #c8a951; /* gold accent */
+  border-left: 4px solid #c8a951;
   padding: 1em 1.5em;
   margin: 1em 0;
   font-family: "Georgia", serif;
   color: #222;
   max-width: 400px;
   min-height: 100px;
+  position: relative;
 }
-.quote {
-  font-style: italic;
-  font-size: 1.1em;
-  margin: 0;
+.quote, .author {
+  transition: opacity 1s ease-in-out;
 }
-.author {
-  text-align: right;
-  font-size: 0.9em;
-  color: #555;
-  margin: 0.5em 0 0;
+.hidden {
+  opacity: 0;
 }
 </style>
 
 <script>
 const testimonials = [
-  {
-    quote: "Divinitas nurtures the best in every student.",
-    author: "— Class of 2026"
-  },
-  {
-    quote: "The faculty inspires excellence and creativity at every turn.",
-    author: "— Second-Year Virtue Student"
-  },
-  {
-    quote: "I’ve grown so much here, academically and personally.",
-    author: "— Choir Club President"
-  },
-  {
-    quote: "Every performance feels like a step toward greatness.",
-    author: "— Theater Arts Student"
-  },
-  {
-    quote: "Divinitas challenges me to reach my full potential.",
-    author: "— Scholarship Recipient"
-  }
+  { quote: "Divinitas nurtures the best in every student.", author: "— Class of 2026" },
+  { quote: "The faculty inspires excellence and creativity at every turn.", author: "— Second-Year Virtue Student" },
+  { quote: "I’ve grown so much here, academically and personally.", author: "— Choir Club President" },
+  { quote: "Every performance feels like a step toward greatness.", author: "— Theater Arts Student" },
+  { quote: "Divinitas challenges me to reach my full potential.", author: "— Scholarship Recipient" }
 ];
 
 let index = 0;
 
 function cycleTestimonials() {
-  index = (index + 1) % testimonials.length;
-  document.getElementById("testimonial-quote").textContent = testimonials[index].quote;
-  document.getElementById("testimonial-author").textContent = testimonials[index].author;
+  const quoteEl = document.getElementById("testimonial-quote");
+  const authorEl = document.getElementById("testimonial-author");
+
+  // Fade out
+  quoteEl.classList.add("hidden");
+  authorEl.classList.add("hidden");
+
+  setTimeout(() => {
+    // Update text
+    index = (index + 1) % testimonials.length;
+    quoteEl.textContent = testimonials[index].quote;
+    authorEl.textContent = testimonials[index].author;
+
+    // Fade in
+    quoteEl.classList.remove("hidden");
+    authorEl.classList.remove("hidden");
+  }, 1000); // matches CSS transition duration
 }
 
-setInterval(cycleTestimonials, 5000); // change every 5s
+setInterval(cycleTestimonials, 5000);
 </script>
