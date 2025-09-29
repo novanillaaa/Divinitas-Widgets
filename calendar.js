@@ -1,42 +1,36 @@
-const monthYear = document.getElementById("monthYear");
-const calendarDays = document.getElementById("calendar-days");
-const prevMonthBtn = document.getElementById("prevMonth");
-const nextMonthBtn = document.getElementById("nextMonth");
+<script>
+function generateCalendar() {
+const now = new Date();
+const month = now.getMonth();
+const year = now.getFullYear();
+const today = now.getDate();
 
-let currentDate = new Date();
+const monthNames = [
+"January","February","March","April","May","June",
+"July","August","September","October","November","December"
+];
+const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-function renderCalendar(date) {
-  calendarDays.innerHTML = "";
-  const month = date.getMonth();
-  const year = date.getFullYear();
-  monthYear.textContent = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+let firstDay = new Date(year, month, 1).getDay();
+let daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const firstDay = new Date(year, month, 1).getDay();
-  const lastDate = new Date(year, month + 1, 0).getDate();
+let table = `<header>${monthNames[month]} ${year}</header><table><tr>`;
+daysOfWeek.forEach(d => { table += `<th>${d}</th>`; });
+table += "</tr><tr>";
 
-  // Empty cells before first day
-  for (let i = 0; i < firstDay; i++) {
-    const emptyCell = document.createElement("div");
-    emptyCell.textContent = "";
-    calendarDays.appendChild(emptyCell);
-  }
-
-  // Days
-  for (let day = 1; day <= lastDate; day++) {
-    const dayCell = document.createElement("div");
-    dayCell.textContent = day;
-    calendarDays.appendChild(dayCell);
-  }
+for (let i = 0; i < firstDay; i++) {
+table += "<td></td>";
 }
 
-prevMonthBtn.addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  renderCalendar(currentDate);
-});
+for (let day = 1; day <= daysInMonth; day++) {
+let isToday = day === today ? "today" : "";
+table += `<td class="${isToday}">${day}</td>`;
+if ((day + firstDay) % 7 === 0) table += "</tr><tr>";
+}
 
-nextMonthBtn.addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  renderCalendar(currentDate);
-});
+table += "</tr></table>";
+document.getElementById("calendar").innerHTML = table;
+}
 
-renderCalendar(currentDate);
+generateCalendar();
+</script>
