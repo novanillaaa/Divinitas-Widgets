@@ -1,4 +1,3 @@
-<script>
 const testimonials = [
   { quote: "Divinitas nurtures the best in every student.", author: "— Class of 2026" },
   { quote: "The faculty inspires excellence and creativity at every turn.", author: "— Second-Year Virtue Student" },
@@ -29,4 +28,3 @@ function cycleTestimonials() {
 }
 
 setInterval(cycleTestimonials, 5000);
-</script>
